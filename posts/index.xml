@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Hongwei Qin&#39;s Blog</title>
+    <link>https://hongweiqin.github.io/blog/posts/</link>
+    <description>Recent content in Posts on Hongwei Qin&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 12 Jun 2020 23:17:31 +0800</lastBuildDate>
+    
+	<atom:link href="https://hongweiqin.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Helloworld</title>
+      <link>https://hongweiqin.github.io/blog/posts/2020/helloworld/</link>
+      <pubDate>Fri, 12 Jun 2020 23:17:31 +0800</pubDate>
+      
+      <guid>https://hongweiqin.github.io/blog/posts/2020/helloworld/</guid>
+      <description>Helloworld! 大家好！</description>
+    </item>
+    
+  </channel>
+</rss>
