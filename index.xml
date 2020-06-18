@@ -6,10 +6,19 @@
     <description>Recent content on Hongwei Qin&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2020 23:17:31 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2020 22:36:37 +0800</lastBuildDate>
     
 	<atom:link href="https://hongweiqin.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>使用火焰图隐藏功能提高绘制精度</title>
+      <link>https://hongweiqin.github.io/blog/posts/2020/20200618/</link>
+      <pubDate>Thu, 18 Jun 2020 22:36:37 +0800</pubDate>
+      
+      <guid>https://hongweiqin.github.io/blog/posts/2020/20200618/</guid>
+      <description>这篇文章是我写的，于2020年6月8日首发于 [Linux阅马场] 公众号。 传送门： https://mp.weixin.qq.com/s/NVRC2UzSKKtvuFrU_Js9-w 由于CPU能耗优化的原因，火焰图有时并不准确。为此，我们来</description>
+    </item>
     
     <item>
       <title>Helloworld</title>

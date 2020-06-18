@@ -6,9 +6,19 @@
     <description>Recent content in Tags on Hongwei Qin&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Thu, 18 Jun 2020 22:36:37 +0800</lastBuildDate>
     
 	<atom:link href="https://hongweiqin.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>BCC Tools</title>
+      <link>https://hongweiqin.github.io/blog/tags/bcc-tools/</link>
+      <pubDate>Thu, 18 Jun 2020 22:36:37 +0800</pubDate>
+      
+      <guid>https://hongweiqin.github.io/blog/tags/bcc-tools/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

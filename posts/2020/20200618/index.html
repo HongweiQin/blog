@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>使用火焰图隐藏功能提高绘制精度 - Hongwei Qin&#39;s Blog</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="使用火焰图隐藏功能提高绘制精度" />
+<meta property="og:description" content="这篇文章是我写的，于2020年6月8日首发于 [Linux阅马场] 公众号。 传送门： https://mp.weixin.qq.com/s/NVRC2UzSKKtvuFrU_Js9-w 由于CPU能耗优化的原因，火焰图有时并不准确。为此，我们来" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hongweiqin.github.io/blog/posts/2020/20200618/" />
+<meta property="article:published_time" content="2020-06-18T22:36:37+08:00" />
+<meta property="article:modified_time" content="2020-06-18T22:36:37+08:00" />
+
+		<meta itemprop="name" content="使用火焰图隐藏功能提高绘制精度">
+<meta itemprop="description" content="这篇文章是我写的，于2020年6月8日首发于 [Linux阅马场] 公众号。 传送门： https://mp.weixin.qq.com/s/NVRC2UzSKKtvuFrU_Js9-w 由于CPU能耗优化的原因，火焰图有时并不准确。为此，我们来">
+<meta itemprop="datePublished" content="2020-06-18T22:36:37&#43;08:00" />
+<meta itemprop="dateModified" content="2020-06-18T22:36:37&#43;08:00" />
+<meta itemprop="wordCount" content="1377">
+
+
+
+<meta itemprop="keywords" content="BCC Tools," />
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/blog/css/style.css">
+	
+	<link rel="shortcut icon" href="/blog/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo logo--mixed">
+		<a class="logo__link" href="/blog" title="Hongwei Qin&#39;s Blog" rel="home">
+			<div class="logo__item logo__imagebox">
+					<img class="logo__img" src="/blog/placeholderrr.png">
+				</div><div class="logo__item logo__text">
+					<div class="logo__title">Hongwei Qin&#39;s Blog</div>
+					<div class="logo__tagline">Hongwei Qin&#39;s personal blog</div>
+				</div>
+		</a>
+	</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item menu__item--active">
+			<a class="menu__link" href="/blog/posts/2020/20200618/">
+				
+				<span class="menu__text">使用火焰图隐藏功能提高绘制精度</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">使用火焰图隐藏功能提高绘制精度</h1>
+			<p class="post__lead">当CPU能耗优化影响火焰图绘制精度时，我们可以这样</p>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Hongwei Qin</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2020-06-18T22:36:37&#43;08:00">June 18, 2020</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/blog/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" rel="category">技术文档</a>
+	</span>
+</div></div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1小实验">1.小实验</a></li>
+    <li><a href="#2原因">2.原因</a></li>
+    <li><a href="#3解决办法">3.解决办法</a></li>
+    <li><a href="#4关于cpu时间准确性的讨论">4.关于CPU时间准确性的讨论</a></li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>这篇文章是我写的，于2020年6月8日首发于 [Linux阅马场] 公众号。 传送门： <a href="https://mp.weixin.qq.com/s/NVRC2UzSKKtvuFrU_Js9-w">https://mp.weixin.qq.com/s/NVRC2UzSKKtvuFrU_Js9-w</a></p>
+<p>由于CPU能耗优化的原因，火焰图有时并不准确。为此，我们来做一个小实验。</p>
+<h2 id="1小实验">1.小实验</h2>
+<p>这是一个简单C程序，其实就是一个死循环，如下：</p>
+<pre><code>#include&lt;stdio.h&gt;
+int globalv;
+void dosth()
+{
+	globalv++;
+}
+int main()
+{
+	globalv = 0;
+	for(;;)
+		dosth();
+	return 0;
+}
+</code></pre><p>编译后可执行程序名为<code>func</code>。接下来我开了两个终端，分别使用<code>taskset</code>将<code>func</code>运行在CPU0和CPU1上:</p>
+<pre><code>taskset 0x1 ./func
+taskset 0x2 ./func
+</code></pre><p>然后使用bcc+flamegraph绘制火焰图：</p>
+<pre><code>/bcc/profile -I -F 99 -daf 10 &gt; out.profile
+/mnt/sdb/FlameGraph/flamegraph.pl &lt; out.profile &gt; out.svg
+</code></pre><p>得到的火焰图：</p>
+<p><img src="/blog/2020/0618/flame1.png" alt="flame1"></p>
+<p>我的测试环境是Qemu/KVM, 32核。</p>
+<p>我们可以看到，火焰图显示，<code>func</code>程序占用了近四分之一的CPU时间。
+但是由于我们把<code>func</code>绑定在CPU0和1上执行，根据小学数学我们应该可以计算出来<code>func</code>最多占用<code>2/32=6.25%</code>的时间。</p>
+<p>是不是有点不对？</p>
+<h2 id="2原因">2.原因</h2>
+<p>由于Linux会对CPU进行能耗优化，在低负载的时候，CPU并不是满负荷工作（降频），因此对于Idle的CPU，bcc的采样数会减少，从而导致总采样数减少。我们可以看到，我们的采样频率是99个样本/(min*CPU)。运行了10s，那么总的样本数应该大约为<code>99*10*32=31680</code>。而实际的总采样数只有8197。分母小了，自然<code>func</code>占用的CPU时间比例增加了。</p>
+<h2 id="3解决办法">3.解决办法</h2>
+<p>当然，我们可以修改CPUfreq强制让所有满负荷工作。但是这样一来麻烦，二来我的测试环境是虚拟机，修改起来更加麻烦。我们希望用一个简单的方法解决。</p>
+<p>这就要提到flamegraph的隐藏功能了。为什么叫隐藏功能？因为如果你简单地<code>./flamegraph.pl --help</code>他不会告诉你这个用法。但是实际上他已经实现了这个功能，语法是：</p>
+<pre><code>./flamegraph.pl --total=N &lt; out.profile &gt; out2.svg
+</code></pre><p>其中N为用户规定的总采样数。在我们的示例中，应该是31680。这样，我们绘制出来的火焰图是这个样子的：</p>
+<p><img src="/blog/2020/0618/flame2.png" alt="flame2"></p>
+<p>嗯，的确有点丑，但是6.26%才是<code>func</code>真正消耗了的CPU时间比例。</p>
+<h2 id="4关于cpu时间准确性的讨论">4.关于CPU时间准确性的讨论</h2>
+<p>怎样才算是绘制了准确的火焰图呢？</p>
+<p>考虑如下情形，如果CPU1满负荷运转执行<code>func1</code>10秒钟，而CPU2半负荷运转执行<code>func2</code>5秒钟，剩下5s是idle。</p>
+<p><strong>算法1：</strong>
+:实际上<code>func1</code>和<code>func2</code>一起是占用了15s的CPU时间。
+根据计算，<code>func</code>占用的时间占总时间的<code>15s/(10s*32)=4.69%</code>。</p>
+<p><strong>算法2：</strong>
+如果按照上面第三节所描述的方法绘制火焰图，采样结果应该是<code>func1</code>有大约990个样本，<code>func2</code>有大约<code>990/2/2=248</code>个样本，绘制出来的火焰图<code>func</code>占比为<code>(990+248)/31680=3.9%</code></p>
+<p>两者不相等！
+笔者认为，原因在于二者算法所获结果的含义不同。算法1计算出来的是在这种运行情形下实际<code>func</code>的执行时间占比。而算法2计算出来（或者说绘制出来）的是在CPU满负荷运转下func的CPU时间占比。
+从现实来看，不同背景负载，不同情形下同一个workload的运行时间可能不同。当系统负载加重时，Linux会自动控制CPUfreq将CPU频率增加。单单查看在某一个情形下workload的CPU执行时间意义有限。但是，对于一个workload而言，他所需要占用的计算资源量往往是相同的。
+因此，从程序优化角度而言，采用第三节所描述的方法计算CPU满负载下应用程序的时间占比对于我们优化代码更具有指导性意义。</p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/blog/tags/bcc-tools/" rel="tag">BCC Tools</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Hongwei Qin avatar" src="/blog/img/avatar.png" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Hongwei Qin</span>
+	</div>
+	<div class="authorbox__description">
+		Ofcourse, I am the only author of my personal blog.
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/blog/posts/2020/helloworld/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Helloworld</p>
+		</a>
+	</div>
+</nav>
+
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://hongweiqin.github.io/blog" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/blog/posts/2020/20200618/">使用火焰图隐藏功能提高绘制精度</a></li>
+			<li class="widget__item"><a class="widget__link" href="/blog/posts/2020/helloworld/">Helloworld</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/blog/tags/bcc-tools/" title="BCC Tools">BCC Tools (1)</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 Hongwei Qin.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/blog/js/menu.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+</body>
+</html>
